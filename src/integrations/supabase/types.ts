@@ -14,7 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      sales_data: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          month: string
+          region: string
+          revenue: number
+          sales: number
+          updated_at: string
+          year: number
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          id?: string
+          month: string
+          region?: string
+          revenue: number
+          sales: number
+          updated_at?: string
+          year: number
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          month?: string
+          region?: string
+          revenue?: number
+          sales?: number
+          updated_at?: string
+          year?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
