@@ -1,10 +1,11 @@
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, MeshDistortMaterial, Sphere } from "@react-three/drei";
+import { OrbitControls, MeshDistortMaterial, Sphere, Environment } from "@react-three/drei";
 import { motion } from "framer-motion";
+import { useTheme } from "@/components/ThemeProvider";
 import * as THREE from "three";
 
-function AnimatedSphere() {
+function AnimatedSphere({ isDark }: { isDark: boolean }) {
   const meshRef = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
@@ -17,18 +18,23 @@ function AnimatedSphere() {
   return (
     <Sphere ref={meshRef} args={[1, 100, 200]} scale={2.5}>
       <MeshDistortMaterial
-        color="#00D9FF"
+        color={isDark ? "#00D9FF" : "#0099CC"}
         attach="material"
         distort={0.4}
         speed={2}
         roughness={0.2}
         metalness={0.8}
+        emissive={isDark ? "#00D9FF" : "#0099CC"}
+        emissiveIntensity={isDark ? 0.3 : 0.5}
       />
     </Sphere>
   );
 }
 
 export const Hero3D = () => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
@@ -39,11 +45,13 @@ export const Hero3D = () => {
       {/* 3D Background Canvas */}
       <div className="absolute inset-0 z-0">
         <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} intensity={1} color="#00D9FF" />
-          <pointLight position={[-10, -10, -10]} intensity={0.5} color="#9D4EDD" />
-          <AnimatedSphere />
+          <ambientLight intensity={isDark ? 0.5 : 0.8} />
+          <pointLight position={[10, 10, 10]} intensity={isDark ? 1 : 1.5} color={isDark ? "#00D9FF" : "#0099CC"} />
+          <pointLight position={[-10, -10, -10]} intensity={isDark ? 0.5 : 0.8} color={isDark ? "#9D4EDD" : "#8B5CF6"} />
+          <spotLight position={[0, 10, 0]} intensity={isDark ? 0.5 : 1} angle={0.3} penumbra={1} color={isDark ? "#00D9FF" : "#0099CC"} />
+          <AnimatedSphere isDark={isDark} />
           <OrbitControls enableZoom={false} enablePan={false} />
+          <Environment preset={isDark ? "night" : "city"} />
         </Canvas>
       </div>
 
@@ -73,7 +81,11 @@ export const Hero3D = () => {
       </div>
 
       {/* Animated gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none" />
+      <div className={`absolute inset-0 pointer-events-none ${
+        isDark 
+          ? "bg-gradient-to-b from-transparent via-background/50 to-background" 
+          : "bg-gradient-to-b from-transparent via-background/30 to-background"
+      }`} />
     </motion.section>
   );
 };

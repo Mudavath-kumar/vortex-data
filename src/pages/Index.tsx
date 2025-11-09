@@ -355,18 +355,191 @@ const Index = () => {
           </div>
         </motion.div>
 
+        {/* Pricing Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.75, duration: 0.6 }}
+          className="mb-12"
+        >
+          <h2 className="text-3xl font-bold gradient-text mb-8 text-center">Simple, Transparent Pricing</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                name: "Starter",
+                price: "$29",
+                period: "/month",
+                features: ["Up to 10 users", "Basic analytics", "Email support", "1GB storage"],
+                highlighted: false
+              },
+              {
+                name: "Professional",
+                price: "$99",
+                period: "/month",
+                features: ["Up to 100 users", "Advanced analytics", "Priority support", "10GB storage", "Custom reports"],
+                highlighted: true
+              },
+              {
+                name: "Enterprise",
+                price: "Custom",
+                period: "",
+                features: ["Unlimited users", "Full analytics suite", "24/7 support", "Unlimited storage", "API access", "Dedicated manager"],
+                highlighted: false
+              }
+            ].map((plan, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 + idx * 0.1, duration: 0.5 }}
+                whileHover={{ scale: 1.05, y: -10 }}
+                className={`glass-strong rounded-3xl p-8 ${
+                  plan.highlighted ? "neon-glow border-2 border-primary" : ""
+                }`}
+              >
+                {plan.highlighted && (
+                  <div className="text-center mb-4">
+                    <span className="px-4 py-1 rounded-full bg-primary text-primary-foreground text-sm font-semibold">
+                      Most Popular
+                    </span>
+                  </div>
+                )}
+                <h3 className="text-2xl font-bold text-center mb-2">{plan.name}</h3>
+                <div className="text-center mb-6">
+                  <span className="text-4xl font-bold gradient-text">{plan.price}</span>
+                  <span className="text-muted-foreground">{plan.period}</span>
+                </div>
+                <ul className="space-y-3 mb-8">
+                  {plan.features.map((feature, fIdx) => (
+                    <li key={fIdx} className="flex items-center gap-2">
+                      <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+                        <div className="w-2 h-2 rounded-full bg-primary" />
+                      </div>
+                      <span className="text-sm">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Button 
+                  className={`w-full rounded-xl ${plan.highlighted ? "neon-glow" : ""}`}
+                  variant={plan.highlighted ? "default" : "secondary"}
+                >
+                  {plan.name === "Enterprise" ? "Contact Sales" : "Get Started"}
+                </Button>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Stats Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.85, duration: 0.6 }}
+          className="mb-12"
+        >
+          <div className="glass-strong rounded-3xl p-12">
+            <h2 className="text-3xl font-bold gradient-text mb-8 text-center">Trusted by Industry Leaders</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {[
+                { label: "Active Users", value: "50K+" },
+                { label: "Countries", value: "120+" },
+                { label: "Data Points", value: "1B+" },
+                { label: "Uptime", value: "99.9%" }
+              ].map((stat, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.9 + idx * 0.05, duration: 0.4 }}
+                  className="text-center"
+                >
+                  <div className="text-4xl font-bold gradient-text mb-2">{stat.value}</div>
+                  <div className="text-muted-foreground">{stat.label}</div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Integration Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9, duration: 0.6 }}
+          className="mb-12"
+        >
+          <h2 className="text-3xl font-bold gradient-text mb-8 text-center">Seamless Integrations</h2>
+          <div className="glass-strong rounded-3xl p-8">
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-8 items-center justify-items-center">
+              {["Salesforce", "HubSpot", "Slack", "Google Analytics", "Shopify", "Stripe"].map((integration, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.95 + idx * 0.05, duration: 0.3 }}
+                  whileHover={{ scale: 1.1 }}
+                  className="w-full aspect-square rounded-2xl bg-secondary/50 flex items-center justify-center font-semibold text-sm text-center p-3 cursor-pointer hover:bg-secondary transition-colors"
+                >
+                  {integration}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* FAQ Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.95, duration: 0.6 }}
+          className="mb-12"
+        >
+          <h2 className="text-3xl font-bold gradient-text mb-8 text-center">Frequently Asked Questions</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              {
+                q: "How does the free trial work?",
+                a: "Start with a 14-day free trial, no credit card required. Access all features and cancel anytime."
+              },
+              {
+                q: "Can I change my plan later?",
+                a: "Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately."
+              },
+              {
+                q: "Is my data secure?",
+                a: "We use enterprise-grade encryption and security measures. Your data is always protected and backed up."
+              },
+              {
+                q: "Do you offer custom solutions?",
+                a: "Yes, our Enterprise plan includes custom solutions tailored to your specific business needs."
+              }
+            ].map((faq, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, x: idx % 2 === 0 ? -20 : 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1 + idx * 0.1, duration: 0.5 }}
+                className="glass-strong rounded-3xl p-6"
+              >
+                <h3 className="text-lg font-bold mb-3">{faq.q}</h3>
+                <p className="text-muted-foreground">{faq.a}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
         {/* CTA Section */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-          className="glass-strong rounded-3xl p-12 text-center neon-glow"
+          transition={{ delay: 1.1, duration: 0.6 }}
+          className="glass-strong rounded-3xl p-12 text-center neon-glow mb-12"
         >
           <h2 className="text-4xl font-bold gradient-text mb-4">Ready to Transform Your Analytics?</h2>
           <p className="text-xl text-muted-foreground mb-8">
             Join thousands of companies using Vortex Analytics to make better decisions
           </p>
-          <div className="flex justify-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Button size="lg" className="rounded-xl neon-glow text-lg px-8">
               Get Started Free
             </Button>
@@ -374,7 +547,59 @@ const Index = () => {
               Schedule Demo
             </Button>
           </div>
+          <p className="text-sm text-muted-foreground mt-6">
+            No credit card required • 14-day free trial • Cancel anytime
+          </p>
         </motion.div>
+
+        {/* Footer */}
+        <motion.footer
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.6 }}
+          className="glass-strong rounded-3xl p-8"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+                  <BarChart3 className="w-5 h-5 text-primary-foreground" />
+                </div>
+                <span className="font-bold gradient-text">Vortex</span>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Next-generation analytics platform for modern businesses.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-3">Product</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><a href="#" className="hover:text-primary transition-colors">Features</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Pricing</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Integrations</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-3">Company</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><a href="#" className="hover:text-primary transition-colors">About</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Careers</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Contact</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-3">Legal</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><a href="#" className="hover:text-primary transition-colors">Privacy</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Terms</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Security</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="pt-6 border-t border-border/50 text-center text-sm text-muted-foreground">
+            © 2024 Vortex Analytics. All rights reserved.
+          </div>
+        </motion.footer>
       </div>
     </div>
   );
