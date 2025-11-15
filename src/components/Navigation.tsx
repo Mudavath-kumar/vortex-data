@@ -11,10 +11,10 @@ export const Navigation = () => {
 
   const navItems = [
     { to: "/", label: "Home", icon: Home },
-    { to: "/dashboard", label: "Dashboard", icon: BarChart3 },
-    { to: "/products", label: "Products", icon: FileText },
-    { to: "/blog", label: "Blog", icon: FileText },
-    { to: "/contact", label: "Contact", icon: Users },
+    { to: "/features", label: "Features", icon: BarChart3 },
+    { to: "/pricing", label: "Pricing", icon: FileText },
+    { to: "/about", label: "About", icon: Users },
+    { to: "/integrations", label: "Integrations", icon: FileText },
   ];
 
   return (
