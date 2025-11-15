@@ -1,18 +1,20 @@
 import { NavLink } from "@/components/NavLink";
-import { Moon, Sun, Home, FileText, BarChart3, Users, Settings } from "lucide-react";
+import { Moon, Sun, Home, FileText, BarChart3, Users, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/components/ThemeProvider";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 
 export const Navigation = () => {
   const { theme, setTheme } = useTheme();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
     { to: "/", label: "Home", icon: Home },
-    { to: "/reports", label: "Reports", icon: FileText },
-    { to: "/analytics", label: "Analytics", icon: BarChart3 },
-    { to: "/team", label: "Team", icon: Users },
-    { to: "/settings", label: "Settings", icon: Settings },
+    { to: "/dashboard", label: "Dashboard", icon: BarChart3 },
+    { to: "/products", label: "Products", icon: FileText },
+    { to: "/blog", label: "Blog", icon: FileText },
+    { to: "/contact", label: "Contact", icon: Users },
   ];
 
   return (
@@ -46,19 +48,59 @@ export const Navigation = () => {
             ))}
           </div>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="rounded-xl"
-          >
-            {theme === "dark" ? (
-              <Sun className="w-5 h-5" />
-            ) : (
-              <Moon className="w-5 h-5" />
-            )}
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="rounded-xl"
+            >
+              {theme === "dark" ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden rounded-xl"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </Button>
+          </div>
         </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="md:hidden mt-4 pt-4 border-t border-border/50"
+            >
+              <div className="flex flex-col gap-2">
+                {navItems.map((item) => (
+                  <NavLink
+                    key={item.to}
+                    to={item.to}
+                    end={item.to === "/"}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-4 py-3 rounded-xl transition-all hover:bg-secondary/50"
+                    activeClassName="bg-secondary text-primary font-semibold neon-glow"
+                  >
+                    <item.icon className="w-4 h-4 inline mr-2" />
+                    {item.label}
+                  </NavLink>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.nav>
   );
