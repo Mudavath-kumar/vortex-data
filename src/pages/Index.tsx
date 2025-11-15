@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { BarChart3, LineChart as LineIcon, PieChart as PieIcon, TrendingUp, Activity, Download, Zap, Target, Globe } from "lucide-react";
 import { exportToCSV, exportToPDF } from "@/utils/exportUtils";
+import { Link } from "react-router-dom";
 import {
   BarChart,
   Bar,
@@ -296,20 +297,21 @@ const Index = () => {
                 description: "Track performance across multiple regions and markets with comprehensive global analytics."
               }
             ].map((feature, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + idx * 0.1, duration: 0.5 }}
-                whileHover={{ scale: 1.05, y: -10 }}
-                className="glass-strong rounded-3xl p-8 text-center neon-glow cursor-pointer"
-              >
-                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                  <feature.icon className="w-8 h-8 text-primary-foreground" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-                <p className="text-muted-foreground">{feature.description}</p>
-              </motion.div>
+              <Link key={idx} to="/features">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 + idx * 0.1, duration: 0.5 }}
+                  whileHover={{ scale: 1.05, y: -10 }}
+                  className="glass-strong rounded-3xl p-8 text-center neon-glow cursor-pointer"
+                >
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+                    <feature.icon className="w-8 h-8 text-primary-foreground" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
+                  <p className="text-muted-foreground">{feature.description}</p>
+                </motion.div>
+              </Link>
             ))}
           </div>
         </motion.div>
@@ -335,22 +337,23 @@ const Index = () => {
                 role: "VP Sales, InnovateCo"
               }
             ].map((testimonial, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, x: idx === 0 ? -20 : 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.7 + idx * 0.1, duration: 0.5 }}
-                className="glass-strong rounded-3xl p-8 neon-glow-accent"
-              >
-                <p className="text-lg mb-4 italic">"{testimonial.quote}"</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent" />
-                  <div>
-                    <p className="font-bold">{testimonial.author}</p>
-                    <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+              <Link key={idx} to="/about">
+                <motion.div
+                  initial={{ opacity: 0, x: idx === 0 ? -20 : 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.7 + idx * 0.1, duration: 0.5 }}
+                  className="glass-strong rounded-3xl p-8 neon-glow-accent cursor-pointer hover:scale-105 transition-transform"
+                >
+                  <p className="text-lg mb-4 italic">"{testimonial.quote}"</p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent" />
+                    <div>
+                      <p className="font-bold">{testimonial.author}</p>
+                      <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              </Link>
             ))}
           </div>
         </motion.div>
@@ -422,8 +425,11 @@ const Index = () => {
                 <Button 
                   className={`w-full rounded-xl ${plan.highlighted ? "neon-glow" : ""}`}
                   variant={plan.highlighted ? "default" : "secondary"}
+                  asChild
                 >
-                  {plan.name === "Enterprise" ? "Contact Sales" : "Get Started"}
+                  <Link to={plan.name === "Enterprise" ? "/contact" : "/pricing"}>
+                    {plan.name === "Enterprise" ? "Contact Sales" : "Get Started"}
+                  </Link>
                 </Button>
               </motion.div>
             ))}
@@ -472,16 +478,17 @@ const Index = () => {
           <div className="glass-strong rounded-3xl p-8">
             <div className="grid grid-cols-3 md:grid-cols-6 gap-8 items-center justify-items-center">
               {["Salesforce", "HubSpot", "Slack", "Google Analytics", "Shopify", "Stripe"].map((integration, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.95 + idx * 0.05, duration: 0.3 }}
-                  whileHover={{ scale: 1.1 }}
-                  className="w-full aspect-square rounded-2xl bg-secondary/50 flex items-center justify-center font-semibold text-sm text-center p-3 cursor-pointer hover:bg-secondary transition-colors"
-                >
-                  {integration}
-                </motion.div>
+                <Link key={idx} to="/integrations">
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.95 + idx * 0.05, duration: 0.3 }}
+                    whileHover={{ scale: 1.1 }}
+                    className="w-full aspect-square rounded-2xl bg-secondary/50 flex items-center justify-center font-semibold text-sm text-center p-3 cursor-pointer hover:bg-secondary transition-colors"
+                  >
+                    {integration}
+                  </motion.div>
+                </Link>
               ))}
             </div>
           </div>
@@ -540,11 +547,11 @@ const Index = () => {
             Join thousands of companies using Vortex Analytics to make better decisions
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button size="lg" className="rounded-xl neon-glow text-lg px-8">
-              Get Started Free
+            <Button size="lg" className="rounded-xl neon-glow text-lg px-8" asChild>
+              <Link to="/pricing">Get Started Free</Link>
             </Button>
-            <Button size="lg" variant="secondary" className="rounded-xl text-lg px-8">
-              Schedule Demo
+            <Button size="lg" variant="secondary" className="rounded-xl text-lg px-8" asChild>
+              <Link to="/contact">Schedule Demo</Link>
             </Button>
           </div>
           <p className="text-sm text-muted-foreground mt-6">
@@ -574,17 +581,17 @@ const Index = () => {
             <div>
               <h4 className="font-semibold mb-3">Product</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-primary transition-colors">Features</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Pricing</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Integrations</a></li>
+                <li><Link to="/features" className="hover:text-primary transition-colors">Features</Link></li>
+                <li><Link to="/pricing" className="hover:text-primary transition-colors">Pricing</Link></li>
+                <li><Link to="/integrations" className="hover:text-primary transition-colors">Integrations</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-3">Company</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-primary transition-colors">About</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Careers</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Contact</a></li>
+                <li><Link to="/about" className="hover:text-primary transition-colors">About</Link></li>
+                <li><Link to="/blog" className="hover:text-primary transition-colors">Blog</Link></li>
+                <li><Link to="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
               </ul>
             </div>
             <div>
